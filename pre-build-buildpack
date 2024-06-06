@@ -5,29 +5,11 @@ APP="$1"; IMAGE="dokku/$APP"
 echo "-----> Installing chromium ..."
 COMMAND=$(cat <<EOF
 
-cd $(dirname $0)
+cd /tmp && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
-LASTCHANGE_URL="https://www.googleapis.com/download/storage/v1/b/chromium-browser-snapshots/o/Linux_x64%2FLAST_CHANGE?alt=media"
+apt install -f /tmp/google-chrome-stable_current_amd64.deb
 
-REVISION=$(curl -s -S $LASTCHANGE_URL)
-
-echo "latest revision is $REVISION"
-
-ZIP_URL="https://www.googleapis.com/download/storage/v1/b/chromium-browser-snapshots/o/Linux_x64%2F$REVISION%2Fchrome-linux.zip?alt=media"
-
-ZIP_FILE="${REVISION}-chrome-linux.zip"
-
-echo "fetching $ZIP_URL"
-
-rm -rf $REVISION
-mkdir $REVISION
-pushd $REVISION
-curl -# $ZIP_URL > $ZIP_FILE
-echo "unzipping.."
-unzip $ZIP_FILE
-popd
-rm -f ./latest
-ln -s $REVISION/chrome-linux/ ./latest
+rm /tmp/google-chrome-stable_current_amd64.deb
 
 echo "-----> chromium installed!"
 sleep 1 # wait so that docker run has not exited before docker attach
