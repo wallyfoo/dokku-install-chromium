@@ -5,11 +5,11 @@ APP="$1"; IMAGE="dokku/$APP"
 echo "-----> Installing chromium ..."
 COMMAND=$(cat <<EOF
 
-add-apt-repository ppa:phd/chromium-browser
+cd /tmp && wget http://http.us.debian.org/debian/pool/main/c/chromium/chromium_125.0.6422.141-1_amd64.deb
 
-apt update -y
+apt install -f /tmp/chromium_125.0.6422.141-1_amd64.deb
 
-apt install -y chromium-browser
+rm /tmp/chromium_125.0.6422.141-1_amd64.deb
 
 echo "-----> chromium installed!"
 sleep 1 # wait so that docker run has not exited before docker attach
