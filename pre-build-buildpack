@@ -4,7 +4,18 @@ set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 APP="$1"; IMAGE="dokku/$APP"
 echo "-----> Installing chromium ..."
 COMMAND=$(cat <<EOF
-snap install chromium
+
+add-apt-repository ppa:phd/chromium-browser
+
+echo '
+Package: *
+Pin: release o=LP-PPA-phd-chromium-browser
+Pin-Priority: 1001
+' | tee /etc/apt/preferences.d/phd-chromium-browser
+
+apt update -y
+
+apt install -y chromium-browser
 
 echo "-----> chromium installed!"
 sleep 1 # wait so that docker run has not exited before docker attach
