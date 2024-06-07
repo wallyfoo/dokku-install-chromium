@@ -5,9 +5,6 @@ APP="$1"; IMAGE="dokku/$APP"
 echo "-----> Installing chromium ..."
 COMMAND=$(cat <<EOF
 
-cd /tmp && wget http://archive.ubuntu.com/ubuntu/pool/main/libu/libu2f-host/libu2f-udev_1.1.4-1_all.deb
-dpkg -i libu2f-udev_1.1.4-1_all.deb
-
 cd /tmp && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
 apt install -f /tmp/google-chrome-stable_current_amd64.deb
